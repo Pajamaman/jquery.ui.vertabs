@@ -33,6 +33,14 @@ Default: null
 
 A callback function to be executed after a new tab is added.
 
+#### Example
+
+    $('.selector').vertabs({
+        'addTab': function (title, panelID) {
+            $('#panelID').append('<h3>' + title + '</h3>');
+        }
+    });
+
 ---
 
 #### renameTab
@@ -42,15 +50,39 @@ Default: null
 
 A callback function to be executed after a tab is renamed.
 
+#### Example
+
+    $('.selector').vertabs({
+        'renameTab': function (panelID, title) {
+            $('#panelID').find('h3').text(title);
+        }
+    });
+
 ---
 
 ### Methods
 
+#### activate(panelID)
+
+Returns: jQuery (plugin only)
+
+Activates the tab and panel with the ID given.
+
+* panelID  
+Type: String  
+The ID of the tab to activate (without hash mark).
+
+##### Example:
+
+    $('.selector').vertabs('activate', 'tab-3');
+
+---
+
 #### addTab(title)
 
-Returns: null
+Returns: jQuery (plugin only)
 
-Adds a new tab and panel with the title given. The ID of the new panel is the result of `makeID(title)`.
+Adds a new tab and panel with the title given. The ID of the new panel is the string `ui-vertabs-tab-` plus a random integer.
 
 * title  
 Type: String  
@@ -62,35 +94,39 @@ The title of the new tab.
 
 ---
 
-#### makeID(string)
+#### randomInt(min, max)
 
-Returns: String
+Returns: Number
 
-Returns a string that can be used as the ID attribute of a DOM element, with spaces replaced by dashes and special characters removed.
+Generates a random number within the range given. This function is used when adding a new tab and panel to create the ID.
 
-* string  
-Type: String  
-A string.
+* min  
+Type: Number  
+The minimum number to return.
+
+* max  
+Type: Number  
+The maximum number to return.
 
 ##### Example:
 
-    var validID = $('.selector').vertabs('makeID', 'Not a valid ID');
+    var random = $('.selector').vertabs('randomInt', 1, 100);
 
 ---
 
-#### renameTab(title, newTitle)
+#### renameTab(panelID, title)
 
-Returns: null
+Returns: jQuery (plugin only)
 
-Renames a tab, changes its ID and all that good stuff.
+Changes the title on the tab with the ID given.
+
+* panelID  
+Type: String  
+The ID of the tab to rename (without hash mark).
 
 * title  
 Type: String  
-The title of the tab before it is renamed.
-
-* newTitle  
-Type: String  
-The title of the tab after it is renamed.
+The new title of the tab.
 
 ##### Example:
 
@@ -100,5 +136,4 @@ The title of the tab after it is renamed.
 
 ### To-do
 
-* `addTab` and `removeTab` methods should return the element jQuery style.
 * It would be cool if tabs could be added to the right side as well as the left.

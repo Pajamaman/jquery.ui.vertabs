@@ -24,36 +24,34 @@
                 });
             
             this.links = this.tabs.children('a')
-                .click(function () {
-                    var panelID = $(this).attr('href');
+                .click(function (e) {
+                    var panelID = $(this).attr('href').substr(1);
+                    e.preventDefault();
                     self.activate(panelID);
                 });
             
             this.activate();
         },
         'activate': function (panelID) {
-            if (!panelID) {
-                this.tabs.filter(':first').addClass('ui-state-active');
-                this.panels.filter(':not(:first)').hide();
-                return;
-            }
+            panelID = panelID || this.panels.first().attr('id');
             
-            this.tabs.removeClass('ui-state-active');
-            this.panels.hide();
+            this.tabs.filter('.ui-state-active').removeClass('ui-state-active');
+            this.panels.filter(':visible').hide();
             
-            this.tabs.has('a[href=' + panelID + ']').addClass('ui-state-active');
-            $(panelID).show();
+            this.tabs.has('a[href=#' + panelID + ']').addClass('ui-state-active');
+            $('#' + panelID).show();
         },
         'addTab': function (title) {
-            var newID = this.makeID(title),
+            var panelID = 'ui-vertabs-tab-' + this.randomInt(1000, 9999),
                 self = this,
                 newLink,
                 newPanel,
                 newTab;
             
-            newLink = $('<a href="#' + newID + '">' + title + '</a>')
-                .click(function () {
-                    var panelID = $(this).attr('href');
+            newLink = $('<a href="#' + panelID + '">' + title + '</a>')
+                .click(function (e) {
+                    var panelID = $(this).attr('href').substr(1);
+                    e.preventDefault();
                     self.activate(panelID);
                 });
             
@@ -65,7 +63,7 @@
                     $(this).removeClass('ui-state-hover');
                 });
             
-            newPanel = $('<div class="ui-vertabs-panel" id="' + newID + '"></div>');
+            newPanel = $('<div class="ui-vertabs-panel" id="' + panelID + '"></div>');
             
             this.links = this.links.add(newLink);
             this.tabs = this.tabs.add(newTab);
@@ -74,27 +72,21 @@
             $('#new-category-tab').before(newTab);
             $('#new-category').before(newPanel);
             
-            this.activate('#' + newID);
+            this.activate(panelID);
             
             if ($.isFunction(this.options.addTab)) {
-                this.options.addTab(title, newID);
+                this.options.addTab(title, panelID);
             }
         },
-        'makeID': function (string) {
-            return string.replace(/ /g, '-').replace(/[^\w-]/g, '').toLowerCase();
+        'randomInt': function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         },
-        'renameTab': function (title, newTitle) {
-            var ID = this.makeID(title),
-                newID = this.makeID(newTitle);
-            
-            this.links.filter('[href=#' + ID + ']')
-                .attr('href', '#' + newID)
-                .text(newTitle);
-            
-            $('#' + ID).attr('id', newID);
+        'renameTab': function (panelID, title) {
+            this.links.filter('[href=#' + panelID + ']')
+                .text(title);
             
             if ($.isFunction(this.options.renameTab)) {
-                this.options.renameTab(title, newID);
+                this.options.renameTab(panelID, title);
             }
         }
     });
