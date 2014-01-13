@@ -1,6 +1,7 @@
 (function ($) {
     $.widget('ui.vertabs', {
         'options': {
+            'activate': null,
             'addTab': null,
             'renameTab': null
         },
@@ -40,13 +41,22 @@
             
             this.tabs.has('a[href=#' + panelID + ']').addClass('ui-state-active');
             $('#' + panelID).show();
+            
+            if ($.isFunction(this.options.activate)) {
+                this.options.activate(panelID);
+            }
         },
-        'addTab': function (title) {
-            var panelID = 'ui-vertabs-tab-' + this.randomInt(1000, 9999),
-                self = this,
+        'addTab': function (title, panelID) {
+            var self = this,
                 newLink,
                 newPanel,
                 newTab;
+            
+            panelID = panelID || 'ui-vertabs-tab-' + this.randomInt(1000, 9999);
+            
+            while ($('#' + panelID).length) {
+                panelID = 'ui-vertabs-tab-' + this.randomInt(1000, 9999);
+            }
             
             newLink = $('<a href="#' + panelID + '">' + title + '</a>')
                 .click(function (e) {
@@ -69,8 +79,8 @@
             this.tabs = this.tabs.add(newTab);
             this.panels = this.panels.add(newPanel);
             
-            $('#new-category-tab').before(newTab);
-            $('#new-category').before(newPanel);
+            this.tabContainer.append(newTab);
+            this.element.append(newPanel);
             
             this.activate(panelID);
             

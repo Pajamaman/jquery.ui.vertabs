@@ -26,6 +26,21 @@ There are a couple of neat features.
 
 ### Options
 
+#### activate
+
+Type: Function  
+Default: null
+
+A callback function to be executed after a tab is activated.
+
+#### Example
+
+    $('.selector').vertabs({
+        'activate': function (panelID) {}
+    });
+
+---
+
 #### addTab
 
 Type: Function  
@@ -36,9 +51,7 @@ A callback function to be executed after a new tab is added.
 #### Example
 
     $('.selector').vertabs({
-        'addTab': function (title, panelID) {
-            $('#panelID').append('<h3>' + title + '</h3>');
-        }
+        'addTab': function (title, panelID) {}
     });
 
 ---
@@ -53,9 +66,7 @@ A callback function to be executed after a tab is renamed.
 #### Example
 
     $('.selector').vertabs({
-        'renameTab': function (panelID, title) {
-            $('#panelID').find('h3').text(title);
-        }
+        'renameTab': function (panelID, title) {}
     });
 
 ---
