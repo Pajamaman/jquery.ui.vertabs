@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <link href="http://code.jquery.com/ui/1.10.3/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+        <link href="css/jquery-ui-vertabs.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="my-tabs">
+            <ul>
+                <li><a href="#tab-1">Tab 1</a></li>
+                <li><a href="#tab-2">Tab 2</a></li>
+                <li><a href="#tab-3">Tab 3</a></li>
+            </ul>
+            <div id="tab-1">This is the first tab.</div>
+            <div id="tab-2">This is the second tab.</div>
+            <div id="tab-3">I like to eat steak.</div>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="js/jquery-ui-vertabs.js"></script>
+        <script>
+            $(function () {
+                $('#my-tabs').vertabs();
+            });
+        </script>
+    </body>
+</html>
