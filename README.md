@@ -33,7 +33,7 @@ Default: null
 
 A callback function to be executed after a tab is activated.
 
-#### Example
+##### Example:
 
     $('.selector').vertabs({
         'activate': function (panelID) {}
@@ -48,7 +48,7 @@ Default: null
 
 A callback function to be executed after a new tab is added.
 
-#### Example
+##### Example:
 
     $('.selector').vertabs({
         'addTab': function (title, panelID) {}
@@ -63,7 +63,7 @@ Default: null
 
 A callback function to be executed after a tab is renamed.
 
-#### Example
+##### Example:
 
     $('.selector').vertabs({
         'renameTab': function (panelID, title) {}
