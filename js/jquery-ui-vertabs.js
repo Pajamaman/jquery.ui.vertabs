@@ -3,6 +3,7 @@
         'options': {
             'active': 0,
             'event': 'click',
+            'prefix': 'ui-vertabs-tab-',
             
             // callbacks
             'activate': null,
@@ -111,7 +112,8 @@
             this._hoverable(this.tabs);
         },
         'add': function (label) {
-            var newPanel = $('<div class="ui-vertabs-panel"></div>').hide().uniqueId(),
+            var id = this.options.prefix + (this.panels.length + 1),
+                newPanel = $('<div class="ui-vertabs-panel"></div>').attr('id', id).hide(),
                 newTab = $('<li class="ui-corner-left ui-state-default"></li>'),
                 newAnchor = $('<a></a>').attr('href', '#' + newPanel.attr('id')).text(label);
             

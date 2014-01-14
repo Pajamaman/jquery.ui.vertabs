@@ -2,7 +2,7 @@ This plugin allows you to create a jQuery UI tabs container with the tabs on the
 
 Observe:
 
-    <div id="my-tabs">
+    <div id="tabs">
         <ul>
             <li><a href="#tab-1">Tab 1</a></li>
             <li><a href="#tab-2">Tab 2</a></li>
@@ -14,7 +14,7 @@ Observe:
     </div>
     <script>
         $(function () {
-            $('#my-tabs').vertabs();
+            $('#tabs').vertabs();
         });
     </script>
 
@@ -63,6 +63,27 @@ The type of event that the tabs should react to in order to activate the tab. To
     
     // setter
     $('.selector').vertabs('option', 'event', 'mouseover');
+
+---
+
+#### prefix
+
+Type: `String`  
+Default: `'ui-vertabs-tab-'`
+
+When a tab is added via the `add` method, the ID of the new panel will be this value followed by the number of tabs
+plus one.
+
+##### Examples:
+
+    // initialize
+    $('.selector').vertabs({ 'prefix': 'tab-' });
+    
+    // getter
+    var prefix = $('.selector').vertabs('option', 'prefix');
+    
+    // setter
+    $('.selector').vertabs('option', 'prefix', 'tab-');
 
 ---
 
@@ -208,7 +229,8 @@ Type: `vertabsactivate`
 
 Triggered after a tab has been activated.
 
-Note: Since the `activate` event is only fired on tab activation, it is not fired for the initial tab when the tabs widget is created. If you need a hook for widget creation use the `create` event.
+Note: Since the `activate` event is only fired on tab activation, it is not fired for the initial tab when the tabs
+widget is created. If you need a hook for widget creation use the `create` event.
 
 * event  
 Type: `Event`

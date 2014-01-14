@@ -5,7 +5,7 @@
         <link href="css/jquery-ui-vertabs.css" rel="stylesheet" />
     </head>
     <body>
-        <div id="my-tabs">
+        <div id="tabs">
             <ul>
                 <li><a href="#tab-1">Tab 1</a></li>
                 <li><a href="#tab-2">Tab 2</a></li>
@@ -20,7 +20,9 @@
         <script src="js/jquery-ui-vertabs.js"></script>
         <script>
             $(function () {
-                $('#my-tabs').vertabs();
+                $('#tabs').vertabs({
+                    'prefix': 'tab-'
+                });
             });
         </script>
     </body>
