@@ -26,122 +26,345 @@ There are a couple of neat features.
 
 ### Options
 
-#### activate
+#### active
 
-Type: Function  
-Default: null
+Type: `Integer`  
+Default: `0`
 
-A callback function to be executed after a tab is activated.
+Which panel is currently open.
 
-##### Example:
+##### Examples:
 
-    $('.selector').vertabs({
-        'activate': function (panelID) {}
-    });
-
----
-
-#### addTab
-
-Type: Function  
-Default: null
-
-A callback function to be executed after a new tab is added.
-
-##### Example:
-
-    $('.selector').vertabs({
-        'addTab': function (title, panelID) {}
-    });
+    // initialize
+    $('.selector').vertabs({ 'active': 1 });
+    
+    // getter
+    var active = $('.selector').vertabs('option', 'active');
+    
+    // setter
+    $('.selector').vertabs('option', 'active', 1);
 
 ---
 
-#### renameTab
+#### event
 
-Type: Function  
-Default: null
+Type: `String`  
+Default: `'click'`
 
-A callback function to be executed after a tab is renamed.
+The type of event that the tabs should react to in order to activate the tab. To activate on hover, use `'mouseover'`.
 
-##### Example:
+##### Examples:
 
-    $('.selector').vertabs({
-        'renameTab': function (panelID, title) {}
-    });
+    // initialize
+    $('.selector').vertabs({ 'event': 'mouseover' });
+    
+    // getter
+    var event = $('.selector').vertabs('option', 'event');
+    
+    // setter
+    $('.selector').vertabs('option', 'event', 'mouseover');
 
 ---
 
 ### Methods
 
-#### activate(panelID)
+#### add(label)
 
-Returns: jQuery (plugin only)
+Returns: `jQuery`
 
-Activates the tab and panel with the ID given.
+Adds a tab.
 
-* panelID  
-Type: String  
-The ID of the tab to activate (without hash mark).
+* label  
+Type: `String`  
+The tab label.
 
 ##### Example:
 
-    $('.selector').vertabs('activate', 'tab-3');
+    $('.selector').vertabs('add', 'Awesome Tab');
 
 ---
 
-#### addTab(title)
+#### option(optionName)
 
-Returns: jQuery (plugin only)
+Returns: `Object`
 
-Adds a new tab and panel with the title given. The ID of the new panel is the string `ui-vertabs-tab-` plus a random integer.
+Gets the value currently associated with the specified `optionName`.
 
-* title  
-Type: String  
-The title of the new tab.
+* optionName  
+Type: `String`  
+The name of the option to get.
 
 ##### Example:
 
-    $('.selector').vertabs('addTab', 'Awesome Tab');
+    var active = $('.selector').vertabs('option', 'active');
 
 ---
 
-#### randomInt(min, max)
+#### option()
 
-Returns: Number
+Returns: `Object`
 
-Generates a random number within the range given. This function is used when adding a new tab and panel to create the ID.
+Gets an object containing key/value pairs representing the current tabs options hash.
 
-* min  
-Type: Number  
-The minimum number to return.
-
-* max  
-Type: Number  
-The maximum number to return.
+* This signature does not accept any arguments.
 
 ##### Example:
 
-    var random = $('.selector').vertabs('randomInt', 1, 100);
+    var options = $('.selector').vertabs('option');
 
 ---
 
-#### renameTab(panelID, title)
+#### option(optionName, value)
 
-Returns: jQuery (plugin only)
+Returns: `jQuery`
 
-Changes the title on the tab with the ID given.
+Sets the value of the tabs option associated with the specified `optionName`.
 
-* panelID  
-Type: String  
-The ID of the tab to rename (without hash mark).
+* optionName  
+Type: `String`  
+The name of the option to set.
 
-* title  
-Type: String  
-The new title of the tab.
+* value  
+Type: `Object`  
+A value to set for the option.
 
 ##### Example:
 
-    $('.selector').vertabs('renameTab', 'Awesome Tab', 'Awesomer Tab');
+    $('.selector').vertabs('option', 'active', 1);
+
+---
+
+#### option(options)
+
+Returns: `jQuery`
+
+Sets one or more options for the tabs.
+
+* options  
+Type: `Object`  
+A map of option-value pairs to set.
+
+##### Example:
+
+    $('.selector').vertabs('option', { 'active': 1 });
+
+---
+
+#### remove(index)
+
+Returns: `jQuery`
+
+Removes a tab.
+
+* index  
+Type: `Integer`  
+Which tab to remove.
+
+##### Example:
+
+    $('.selector').vertabs('remove', 1);
+
+---
+
+#### rename(index, label)
+
+Returns: `jQuery`
+
+Changes the tab label.
+
+* index  
+Type: `Integer`  
+Which tab to rename.
+
+* label  
+Type: `String`  
+The new tab label.
+
+##### Example:
+
+    $('.selector').vertabs('rename', 2, 'Steak Tab');
+
+---
+
+#### widget()
+
+Returns: `jQuery`
+
+Returns a `jQuery` object containing the tabs container.
+
+* This method does not accept any arguments.
+
+##### Example:
+
+    var widget = $('.selector').vertabs('widget');
+
+---
+
+### Events
+
+#### activate(event, ui)
+
+Type: `vertabsactivate`
+
+Triggered after a tab has been activated.
+
+Note: Since the `activate` event is only fired on tab activation, it is not fired for the initial tab when the tabs widget is created. If you need a hook for widget creation use the `create` event.
+
+* event  
+Type: `Event`
+
+* ui  
+Type: `Object`
+
+    - newPanel  
+    Type: `jQuery`  
+    The panel that was just activated.
+    
+    - newTab  
+    Type: `jQuery`  
+    The tab that was just activated.
+    
+    - oldPanel  
+    Type: `jQuery`  
+    The panel that was just deactivated.
+    
+    - oldTab  
+    Type: `jQuery`  
+    The tab that was just deactivated.
+
+##### Examples:
+
+    // initialize
+    $('.selector').vertabs({
+        'activate': function (event, ui) {}
+    });
+    
+    // bind post-initialization
+    $('.selector').on('vertabsactivate', function (event, ui) {});
+
+---
+
+#### add(event, ui)
+
+Type: `vertabsadd`
+
+Triggered after a tab has been added.
+
+* event  
+Type: `Event`
+
+* ui  
+Type: `Object`
+
+    - newPanel  
+    Type: `jQuery`  
+    The panel that was just activated.
+    
+    - newTab  
+    Type: `jQuery`  
+    The tab that was just activated.
+
+##### Examples:
+
+    // initialize
+    $('.selector').vertabs({
+        'add': function (event, ui) {}
+    });
+    
+    // bind post-initialization
+    $('.selector').on('vertabsadd', function (event, ui) {});
+
+---
+
+#### create(event, ui)
+
+Type: `vertabscreate`
+
+Triggered when the tabs are created.
+
+* event  
+Type: `Event`
+
+* ui  
+Type: `Object`
+
+    - panel  
+    Type: `jQuery`  
+    The active panel.
+    
+    - tab  
+    Type: `jQuery`  
+    The active tab.
+
+##### Examples:
+
+    // initialize
+    $('.selector').vertabs({
+        'create': function (event, ui) {}
+    });
+    
+    // bind post-initialization
+    $('.selector').on('vertabscreate', function (event, ui) {});
+
+---
+
+#### remove
+
+Type: `vertabsremove`
+
+Triggered after a tab has been removed.
+
+* event  
+Type: `Event`
+
+* ui  
+Type: `Object`
+
+    - oldPanel  
+    Type: `jQuery`  
+    The panel that was just removed.
+    
+    - oldTab  
+    Type: `jQuery`  
+    The tab that was just removed.
+
+##### Example:
+
+    // initialize
+    $('.selector').vertabs({
+        'remove': function (event, ui) {}
+    });
+    
+    // bind post-initialization
+    $('.selector').on('vertabsremove', function (event, ui) {});
+
+---
+
+#### rename
+
+Type: `vertabsremove`
+
+Triggered after a tab has been renamed.
+
+* event  
+Type: `Event`
+
+* ui  
+Type: `Object`
+
+    - tab  
+    Type: `jQuery`  
+    The tab that was just renamed.
+
+##### Examples:
+
+    // initialize
+    $('.selector').vertabs({
+        'rename': function (event, ui) {}
+    });
+    
+    // bind post-initialization
+    $('.selector').on('vertabsrename', function (event, ui) {});
 
 ---
 
