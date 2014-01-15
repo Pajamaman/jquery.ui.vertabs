@@ -37,10 +37,13 @@
             newPanel.show();
             newTab.addClass('ui-state-active');
             
-            oldPanel = this._getActivePanel().hide();
-            oldTab = this._getActiveTab().removeClass('ui-state-active');
-            
-            this.options.active = index;
+            // this can happen if we just deleted a tab
+            if (index !== this.options.active) {
+                oldPanel = this._getActivePanel().hide();
+                oldTab = this._getActiveTab().removeClass('ui-state-active');
+                
+                this.options.active = index;
+            }
             
             this._trigger('activate', null, {
                 'newPanel': newPanel,
