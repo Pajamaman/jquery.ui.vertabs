@@ -364,7 +364,7 @@ Type: `Object`
 
 #### rename
 
-Type: `vertabsremove`
+Type: `vertabsrename`
 
 Triggered after a tab has been renamed.
 
@@ -373,6 +373,10 @@ Type: `Event`
 
 * ui  
 Type: `Object`
+
+    - panel  
+    Type: `jQuery`  
+    The panel that was just renamed.
 
     - tab  
     Type: `jQuery`  
