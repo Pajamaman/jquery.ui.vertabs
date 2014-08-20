@@ -147,9 +147,13 @@
             });
         },
         'rename': function (index, label) {
-            var tab = this.tabs.eq(index).children('a').text(label);
+            var panel = this.panels.eq(index),
+                tab = this.tabs.eq(index);
+            
+            tab.children('a').text(label);
             
             this._trigger('rename', null, {
+                'panel': panel,
                 'tab': tab
             });
         }
